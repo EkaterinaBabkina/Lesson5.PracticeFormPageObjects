@@ -27,6 +27,7 @@ dependencies {
             "com.codeborne:selenide:$selenideVersion",
             "io.qameta.allure:allure-selenide:$allureVersion",
             "com.github.javafaker:javafaker:1.0.2",
+            "org.aeonbits.owner:owner:1.0.12",
             "org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly ( "org.slf4j:slf4j-simple:1.7.32",
             "org.junit.jupiter:junit-jupiter-engine:$junitVersion")
@@ -37,6 +38,9 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.withType(Test) {
+//    systemProperty("environment", System.getProperty("environment", "stage")) // preprod, prod
+
+    systemProperties(System.getProperties())
     useJUnitPlatform()
 
     testLogging {
@@ -47,3 +51,28 @@ tasks.withType(Test) {
         }
     }
 }
+
+task properties_tests(type: Test) {
+    systemProperty("browserSize", System.getProperty("browserSize", "400x400"))
+    useJUnitPlatform {
+        includeTags "properties"
+    }
+}
+
+task many_tags_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "properties"
+        includeTags "smoke"
+        excludeTags "prod"
+    }
+}
+
+task empty_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags "empty"
+    }
+}
+/*
+java -"DprojectName=PROJECT_NAME" -"Denv=ENVIRONMENT" -"DreportLink=BUILD_URL" -"Dcomm=comment here" -"Dconfig.file=src/test/resources/notifications/telegram.json" -jar allure-notifications-3.1.2.jar
+
+ */
