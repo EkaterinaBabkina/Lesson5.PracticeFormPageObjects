@@ -22,7 +22,7 @@ public class Negative {
     }
 
     @Test
-    void test3() {
+    void test33() {
         assertTrue(false);
     }
 
