@@ -17,7 +17,7 @@ public class Positive {
     }
 
     @Test
-    void test2() {
+    void test02() {
         assertTrue(true);
     }
 

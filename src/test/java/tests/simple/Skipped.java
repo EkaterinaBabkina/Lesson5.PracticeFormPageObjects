@@ -14,7 +14,7 @@ public class Skipped {
 
     @Test
     @Disabled
-    void test1() {
+    void test01() {
         assertTrue(true);
     }
 
